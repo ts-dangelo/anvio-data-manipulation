@@ -1,3 +1,10 @@
+'''
+Anvio exports one giant fasta for gene clusters from the pan-genomics workflow.  
+This script chops it up into fastas for each individual gene cluster.  
+This only works if the fasta headers are formated the default way they currently are 
+produced by Anvio (Anvio-7)
+'''
+
 import sys, os.path
 from Bio import SeqIO
 import glob
