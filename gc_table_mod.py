@@ -1,3 +1,8 @@
+'''
+This produces a genome x GC count table from a directory of gene cluster amino acid fastas exported and split up from anvio (output of split_anvio_gc_fasta.py).
+You need to make a single column text file with the names of the genomes comprising the GC's. 
+'''
+
 import sys, os.path
 from Bio import SeqIO
 import glob
@@ -8,7 +13,7 @@ from collections import defaultdict
 import pandas as pd
 
 parser = argparse.ArgumentParser(description="Create table of protein family count per genome")
-parser.add_argument('-genomes', help="Text file with genome identifiers that are the first field before the first underscore in the fasta headers")
+parser.add_argument('-genomes', help="Single column text file with genome names")
 parser.add_argument('-fam_path', help="Path to faa files of protein families")
 parser.add_argument('-ext', help="fasta file extension")
 parser.add_argument('-output', help="Output table file name")
