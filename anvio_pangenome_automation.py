@@ -6,7 +6,7 @@ This runs:
 			
 		2.	anvi-gen-contigs-databas
 			
-		3.	anvi-run-kegg-kofams (optional with --kegg flag (TRUE or FALSE))
+		3.	anvi-run-kegg-kofams (optional with --kegg TRUE)
 			
 	on an input directory of nucleotide fasta files.  It then merges them into a storage database using:
 
