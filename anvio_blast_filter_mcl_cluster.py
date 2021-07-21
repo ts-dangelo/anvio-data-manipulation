@@ -1,14 +1,15 @@
 ## Most code within definitions excised and modified from: https://github.com/merenlab/anvio/blob/master/anvio/panops.py. 
 ## All credit to the anvio developers.
 
-```
+'''
+
 Python definitions excised from https://github.com/merenlab/anvio/blob/master/anvio/panops.py to take Diamond or Blast results and do downstream 
 Minbit filtering and MCL clustering. This was taken out of the anvio pangenomics workflow so that the influence of minbit and inflation parameters
 on cluster numbers could be investigated outside of the full workflow (to avoid having to do large blast-alls over and over again).
 You can't actually access gene sequences or clusters from the data produced here. It's only useful for investigating the graph clustering output. 
 Will produce the MCL output files and a summary of Minbit and MCL filtering statistics for comparisons.
 
-```
+'''
 
 def gen_mcl_input(blastall_results, min_percent_id, minbit_param):
 
