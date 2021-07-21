@@ -1,4 +1,4 @@
-## Most code within definitions excised and modified from: https://github.com/merenlab/anvio/blob/master/anvio/panops.py
+## Most code within definitions excised and modified from: https://github.com/merenlab/anvio/blob/master/anvio/panops.py. All credit to the anvio developers.
 
 def gen_mcl_input(blastall_results, min_percent_id, minbit_param):
 
