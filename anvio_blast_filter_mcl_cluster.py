@@ -11,7 +11,7 @@ Will produce the MCL output files and a summary of Minbit and MCL filtering stat
 
 '''
 
-def gen_mcl_input(blastall_results, min_percent_id, minbit_param):
+def gen_mcl_input(blastall_results, min_percent_id, minbit_param, out_pref):
 
 	import os
 	import glob
@@ -55,7 +55,7 @@ def gen_mcl_input(blastall_results, min_percent_id, minbit_param):
         ### Heuristic code removed here, warning will still be called to point out this issue if it exists
     
 	abs_path = os.path.abspath(os.getcwd())
-	mcl_input_file_path = os.path.join(abs_path, 'mcl-input.txt')
+	mcl_input_file_path = os.path.join(abs_path, '%s-mcl-input.txt' % (out_pref))
 	mcl_input = open(mcl_input_file_path, 'w')
 	
 	line_no = 1
@@ -170,7 +170,7 @@ def main():
 				
 		else:
 		
-			mcl_input_file_path, num_edges_stored, num_minbit_filtered, num_blast_filtered = gen_mcl_input(blastall_results, min_percent_id, minbit_param)
+			mcl_input_file_path, num_edges_stored, num_minbit_filtered, num_blast_filtered = gen_mcl_input(blastall_results, min_percent_id, minbit_param, out_pref)
 			clusters_file_path = cluster(mcl_input_file_path, inf, out_pref)
 			num_clusters = get_clusters_dict(clusters_file_path) 
 		
