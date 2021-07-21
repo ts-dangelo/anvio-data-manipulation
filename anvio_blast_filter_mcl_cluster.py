@@ -40,10 +40,6 @@ def gen_mcl_input(blastall_results, min_percent_id, minbit_param):
                                                     % (len(ids_without_self_search), len(all_ids), \
                                                        ', '.join(ids_without_self_search)))
 
-        # HEURISTICS TO ADD MISSING SELF SEARCH RESULTS
-        # we are here, because amino acid sequences in ids_without_self_search did not have any hits in the search output
-        # although they were in the FASTA file the target database were built from. so we will make sure they are not
-        # missing from self_bit_scores dict, or mcl_input (additional mcl inputs will be stored in the following dict)
         
         ### Heuristic code removed here, warning will still be called to point out this issue if it exists
     
