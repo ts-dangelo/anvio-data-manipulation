@@ -31,7 +31,11 @@ def gen_mcl_input(blastall_results, min_percent_id, minbit_param, out_pref):
 			
 	ids_without_self_search = all_ids - set(self_bit_scores.keys())
 	
-	### Heuristic code removed here. Instead sequences without self bitscore will be removed prior to MCL and IDs printed to summary file.  
+	### Heuristic code removed here. Instead sequences without self bitscore will be removed prior to MCL and IDs printed to summary file. 
+	### This doesn't seem to be a big deal for accessing general clustering properties.  For example, in a dataset of >800 partial genomes,
+	### with ~2.7 million protein coding sequences, only 4 of those sequences did not produce a self bitscore.  Removing those sequences 
+	### prior to MCL clustering resulted in the exact same number of protein clusters, when compared to the full anvio workflow with artificial
+	### self bitscore production via their heuristic. 
     
 	abs_path = os.path.abspath(os.getcwd())
 	mcl_input_file_path = os.path.join(abs_path, '%s-mcl-input.txt' % (out_pref))
