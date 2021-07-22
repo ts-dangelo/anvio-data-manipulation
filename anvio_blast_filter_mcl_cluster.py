@@ -128,6 +128,8 @@ def main():
 	minbit_param = arg_dict['minbit']
 	min_percent_id = arg_dict['min_percent_id']
 	blastall_results = arg_dict['blast']
+	if blastall_results is not None:
+		num_edges_raw = sum(1 for line in open(blastall_results))
 	num_edges_raw = sum(1 for line in open(blastall_results))
 	inf = arg_dict['inflation']
 	minbit_out = arg_dict['minbit_out']
