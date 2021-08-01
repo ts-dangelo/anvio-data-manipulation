@@ -1,6 +1,7 @@
 '''
 This produces a genome x GC count table from a directory of gene cluster amino acid fastas exported and split up from anvio (output of split_anvio_gc_fasta.py).
-You need to make a single column text file with the names of the genomes comprising the GC's. 
+You need to make a single column text file with the names of the genomes comprising the GC's. The looping structure here is egregiously slow, so turn up the threads
+and start a pot of coffee 'cus it's going to take a while (like 24 hours). 
 '''
 
 import sys, os.path
