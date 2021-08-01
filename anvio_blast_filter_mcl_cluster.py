@@ -31,11 +31,7 @@ def gen_mcl_input(blastall_results, min_percent_id, minbit_param, out_pref):
 			
 	ids_without_self_search = all_ids - set(self_bit_scores.keys())
 	
-	### Heuristic code removed here. Instead sequences without self bitscore will be removed prior to MCL and IDs printed to summary file. 
-	### This doesn't seem to be a big deal for accessing general clustering properties.  For example, in a dataset of >800 partial genomes,
-	### with ~2.7 million protein coding sequences, only 4 of those sequences did not produce a self bitscore.  Removing those sequences 
-	### prior to MCL clustering resulted in the exact same number of protein clusters, when compared to the full anvio workflow with artificial
-	### self bitscore production via their heuristic. 
+	### Heuristic code removed here. Instead sequences without self bitscore will be removed prior to MCL and IDs printed to summary file.  
     
 	abs_path = os.path.abspath(os.getcwd())
 	mcl_input_file_path = os.path.join(abs_path, '%s-mcl-input.txt' % (out_pref))
@@ -98,15 +94,24 @@ def cluster(mcl_input_file_path, inf, out_pref):
 def get_clusters_dict(clusters_file_path):
         
 
-	line_no = 1
-        
+	clusters = 0
+	singletons = 0
+	  
 	for line in open(clusters_file_path).readlines():
-        
-		line_no += 1
+	
+		fields = line.rsplit("\t")
 		
-	num_clusters = line_no
+		if len(fields) > 1:
+		
+			clusters += 1
+			
+		if len(fields) == 1:
+		
+			singletons += 1
+				
+	num_clusters = clusters
 
-	return num_clusters
+	return (num_clusters, singletons)
 
         
 def main():
@@ -134,7 +139,6 @@ def main():
 	blastall_results = arg_dict['blast']
 	if blastall_results is not None:
 		num_edges_raw = sum(1 for line in open(blastall_results))
-	num_edges_raw = sum(1 for line in open(blastall_results))
 	inf = arg_dict['inflation']
 	minbit_out = arg_dict['minbit_out']
 	out_pref = arg_dict['out_pref']
@@ -147,26 +151,29 @@ def main():
 		if minbit_out is not None:
 		
 			clusters_file_path = cluster(minbit_out, inf, out_pref)
-			num_clusters = get_clusters_dict(clusters_file_path)
+			num_clusters, singletons = get_clusters_dict(clusters_file_path)
 			num_edges_stored = sum(1 for line in open(minbit_out))
 		
 			rf.write("Connections passed to MCL after Minbit filtering \t " + str(num_edges_stored) + "\n")
-			rf.write("Number of Gene clusters identified by MCL = " + str(num_clusters) + "\n")
+			rf.write("Number of Gene (non-singleton) clusters identified by MCL \t " + str(num_clusters) + "\n")
+			rf.write("Number of singleton clusters identified by MCL \t " + str(singletons) + "\n")
 			
 				
 		else:
 		
 			mcl_input_file_path, num_edges_stored, num_minbit_filtered, num_blast_filtered, ids_without_self_search = gen_mcl_input(blastall_results, min_percent_id, minbit_param, out_pref)
 			clusters_file_path = cluster(mcl_input_file_path, inf, out_pref)
-			num_clusters = get_clusters_dict(clusters_file_path) 
+			num_clusters, singletons = get_clusters_dict(clusters_file_path) 
 		
 			rf.write("Number of raw blast connections \t " + str(num_edges_raw) + "\n")
 			rf.write("Weak connections filtered by Minbit \t " + str(num_minbit_filtered) + "\n")
 			rf.write("Weak connections filtered by Percent ID \t " + str(num_blast_filtered) + "\n")
 			rf.write("Connections passed to MCL after Minbit filtering \t " + str(num_edges_stored) + "\n")
-			rf.write("Number of Gene clusters identified by MCL \t " + str(num_clusters) + "\n")
+			rf.write("Number of Gene (non-singleton) clusters identified by MCL \t " + str(num_clusters) + "\n")
+			rf.write("Number of singleton clusters identified by MCL \t " + str(singletons) + "\n")
 			rf.write("Sequences removed before MCL because they did not produce a self bitscore = " + str(ids_without_self_search))
 		
 			
 if __name__ == "__main__":
 	main()	      
+	      
