@@ -32,9 +32,7 @@ def gen_mcl_input(blastall_results, min_percent_id, minbit_param, out_pref):
 	ids_without_self_search = all_ids - set(self_bit_scores.keys())
 	
 	### Heuristic code removed here. Instead sequences without self bitscore will be removed prior to MCL and IDs printed to summary file.  
-	### Test data shows this doesn't make a huge difference: ~800 partial genomes with ~2.7 million total CDS only had 4 CDS that were removed.
-	### With these 4 sequences removed, this workflow still produced the exact same amount of protein clusters as the full anvio pipeline.
-	
+    
 	abs_path = os.path.abspath(os.getcwd())
 	mcl_input_file_path = os.path.join(abs_path, '%s-mcl-input.txt' % (out_pref))
 	mcl_input = open(mcl_input_file_path, 'w')
@@ -178,3 +176,4 @@ def main():
 			
 if __name__ == "__main__":
 	main()	      
+ 
