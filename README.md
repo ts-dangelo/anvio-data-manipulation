@@ -1,1 +1,1 @@
-Small python scripts for misc tasks
+Python scripts for automating bioinformatic processes
